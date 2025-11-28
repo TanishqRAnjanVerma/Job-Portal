@@ -360,11 +360,11 @@
                 id="dropdowns"
               >
                 <% if (locals.user) { %>
-                <div class="d-flex">
+                <div class="d-flex align-items-center justify-content-center">
                   <div style="margin-right: 10px"><%= user.name %></div>
                   <i
                     class="fa fa-chevron-down fa-2xs"
-                    style="margin-top: 10px; font-size: 14px"
+                    style="margin-top: 2px; font-size: 14px"
                   ></i>
                 </div>
 
@@ -440,13 +440,30 @@
                 <% } %>
               </ul>
             </li>
+            <% if (locals.LastVisit) { %>
+            <small
+              class="text-muted"
+              style="
+                font-size: 14px;
+                margin: 5px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              Last visit: <%= LastVisit %>
+            </small>
+            <% } %>
           </ul>
-          <form class="d-flex" role="search">
+          <form class="d-flex" role="search" action="/jobs" method="GET">
             <input
               class="form-control-sm me-2"
               type="search"
+              name="q"
               placeholder="Search jobs..."
               aria-label="Search"
+              value="<%= typeof query !== 'undefined' ? query : '' %>"
             />
             <button
               class="btn btn-primary btn-sm"

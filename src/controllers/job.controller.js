@@ -67,11 +67,45 @@ export default class JobController {
 
   // 2. Get All Jobs Operation
   getAllJobs(req, res, next) {
-    const jobs = JobModel.getAllJobs();
+    let jobs = JobModel.getAllJobs();
+
+    // Search functionality
+    const query = req.query.q;
+    if (query) {
+      const searchTerm = query.toLowerCase();
+      jobs = jobs.filter(
+        (job) =>
+          job.job_designation.toLowerCase().includes(searchTerm) ||
+          job.company_name.toLowerCase().includes(searchTerm) ||
+          job.job_location.toLowerCase().includes(searchTerm) ||
+          (job.skills_required &&
+            Array.isArray(job.skills_required) &&
+            job.skills_required.some((skill) =>
+              skill.toLowerCase().includes(searchTerm)
+            ))
+      );
+    }
+
+    // Pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedJobs = jobs.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(jobs.length / limit);
+
     res.render("list-all-jobs", {
-      jobs: jobs,
+      jobs: paginatedJobs,
       title: "Job Listings",
       user: req.session.user,
+      currentPage: page,
+      totalPages: totalPages,
+      totalJobs: jobs.length,
+      query: query,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      nextPage: page + 1,
+      prevPage: page - 1,
     });
   }
 
@@ -200,12 +234,27 @@ export default class JobController {
       return res.status(404).send("Job not found.");
     }
 
+    // Pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedApplicants = applicants.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(applicants.length / limit);
+
     res.render("all-applicants", {
       jobId: jobId,
       jobDesignation: job.job_designation,
-      allApplicants: applicants,
+      allApplicants: paginatedApplicants,
       title: `Applicants for ${job.job_designation}`,
       user: req.session.user,
+      currentPage: page,
+      totalPages: totalPages,
+      totalApplicants: applicants.length,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      nextPage: page + 1,
+      prevPage: page - 1,
     });
   }
 }

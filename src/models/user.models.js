@@ -39,4 +39,45 @@ export default class UserModel {
 }
 
 // In-memory array to store users
-var users = [];
+var users = [
+  new UserModel(101, "John Doe", "john@example.com", "password", "recruiter"),
+  new UserModel(102, "Jane Smith", "jane@example.com", "password", "recruiter"),
+  new UserModel(103, "Bob Johnson", "bob@example.com", "password", "recruiter"),
+  new UserModel(
+    104,
+    "Alice Brown",
+    "alice@example.com",
+    "password",
+    "recruiter"
+  ),
+  new UserModel(
+    105,
+    "Charlie Wilson",
+    "charlie@example.com",
+    "password",
+    "recruiter"
+  ),
+  new UserModel(
+    106,
+    "Diana Davis",
+    "diana@example.com",
+    "password",
+    "recruiter"
+  ),
+  new UserModel(107, "Eve Miller", "eve@example.com", "password", "recruiter"),
+  new UserModel(
+    108,
+    "Frank Garcia",
+    "frank@example.com",
+    "password",
+    "recruiter"
+  ),
+  new UserModel(109, "Grace Lee", "grace@example.com", "password", "recruiter"),
+  new UserModel(
+    110,
+    "Henry Taylor",
+    "henry@example.com",
+    "password",
+    "recruiter"
+  ),
+];

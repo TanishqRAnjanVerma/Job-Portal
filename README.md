@@ -6,22 +6,28 @@ A full-featured job application portal built with Node.js, Express, and EJS. Thi
 
 ### For Job Seekers
 
-- Browse available job listings
+- Browse available job listings with search and filtering capabilities
 - View detailed job information
 - Apply for jobs with resume upload
 - User registration and login
 - Receive email confirmation upon application
+- View last visit timestamp in the navigation bar
 
 ### For Recruiters
 
 - Post new job opportunities
-- Manage job listings (view, update, delete)
-- View applicants for each job
+- Manage job listings (view, update, delete) with confirmation dialogs
+- View applicants for each job with pagination support
 - Upload company logos
 - User registration and login
+- View last visit timestamp in the navigation bar
 
 ### General Features
 
+- **Job Search**: Filter jobs by title, company name, location, or required skills using the navbar search
+- **Last Visit Tracking**: Display user's last visit date and time in the navigation bar
+- **Confirmation Dialogs**: Prevent accidental modifications with confirmation prompts for update and delete operations
+- **Pagination**: Improved performance with paginated job listings (5 jobs per page) and applicant lists (5 applicants per page)
 - Secure user authentication with sessions
 - Role-based access control (Recruiter vs Job Seeker)
 - Form validation with error handling
@@ -234,6 +240,13 @@ Validation errors are displayed in modals or on forms with user-friendly message
 - Secure cookie settings
 
 ## Development Notes
+
+### Recently Implemented Features
+
+- ✅ Job Search Functionality: Modify `getAllJobs` in `job.controller.js` to accept `q` query parameter and filter jobs by designation, company name, location, and skills
+- ✅ Display Last Visit Date/Time: Modify `layout.ejs` to display last visit date/time from `res.locals.LastVisit` in navbar for logged-in users
+- ✅ Confirmation Dialogs: Add JavaScript confirmation dialog in `list-all-jobs.ejs` for delete operations and in `update-job.ejs` before submitting update form
+- ✅ Pagination: Update `getAllJobs` in `job.controller.js` to support `page` and `limit` query parameters with pagination logic, and update `getApplicants` for pagination. Modify `list-all-jobs.ejs` and `all-applicants.ejs` to generate dynamic pagination links
 
 ### Current TODO Items
 
